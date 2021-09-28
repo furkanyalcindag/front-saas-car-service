@@ -14,10 +14,8 @@ class StaffService {
             headers: authHeader(),
             params
         }).then(response => {
-            console.log(response)
             return response;
         }).catch(error => {
-            console.log("hata", error.data)
             return error;
         });
 
@@ -37,12 +35,10 @@ class StaffService {
 
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -73,12 +69,10 @@ class StaffService {
                 headers: authHeader(),
                 params
             }).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 

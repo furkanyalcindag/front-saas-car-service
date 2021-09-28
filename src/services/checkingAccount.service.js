@@ -37,12 +37,10 @@ class CheckingAccountService {
 
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -58,12 +56,10 @@ class CheckingAccountService {
 
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -83,12 +79,10 @@ class CheckingAccountService {
                 headers: authHeader(),
                 params
             }).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 

@@ -411,16 +411,13 @@ export default {
     },
 
     isCorporateControl() {
-      console.log(this.isCorporate);
       this.isCorporate = !this.isCorporate;
       this.customer.isCorporate = this.isCorporate;
     },
     addCarModal(profileUuid) {
 
-      console.log("uuid", profileUuid)
       this.carModal = true
       this.car.profileUuid = profileUuid
-      console.log("car", this.car)
 
     },
 
@@ -435,9 +432,7 @@ export default {
 
     async deleteStaff() {
 
-      console.log(this.updateBrand)
       let a = await new StaffService().deleteStaff(this.deleteId);
-      console.log("statusDelete", a);
       if (a.status === 200) {
 
         this.deleteModel = false;
@@ -466,14 +461,12 @@ export default {
     },
     successHide() {
       setTimeout(() => (this.isSuccess = false), 5000);
-      console.log("naber");
     },
     errorHideCar() {
       setTimeout(() => (this.isErrorCar = false), 5000);
     },
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
-      console.log("naber");
     },
 
 
@@ -481,7 +474,6 @@ export default {
 
       let response = await new StaffService().getStaff(id);
       this.staffUpdate = response.data
-      console.log(response.data)
       this.staffUpdateModal = true
 
     },
@@ -489,7 +481,6 @@ export default {
 
     async getStaffs() {
       let response = await new StaffService().getStaffs();
-      console.log(response.data.data)
       this.staffs = response.data.data
     },
     async getGroups() {
@@ -499,7 +490,6 @@ export default {
     },
     async addStaff() {
       let a = await new StaffService().addStaff(this.staff);
-      console.log("status", a);
       if (a.status === 200) {
         this.isSuccess = false;
         this.isSuccess = true;
@@ -527,7 +517,6 @@ export default {
       } else {
         this.isError = false;
         this.isError = true;
-        console.log("error", a.response.data)
         this.errors = a.response.data;
         for (const [key, value] of Object.entries(this.errors)){
           this.$toast.error({
@@ -542,7 +531,6 @@ export default {
 
     async updateStaffFunc() {
       let a = await new StaffService().updateStaff(this.staffUpdate);
-      console.log("status", a);
       if (a.status === 200) {
         this.isSuccess = false;
         this.$toast.success({

@@ -44,12 +44,10 @@ class ProductService {
                 brand: product.brand
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -73,12 +71,10 @@ class ProductService {
                 uuid: product.uuid
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -125,7 +121,6 @@ class ProductService {
             headers: authHeader(),
             params
         }).then(response => {
-            console.log(response)
             return response;
         })
 

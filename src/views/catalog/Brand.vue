@@ -348,7 +348,6 @@ export default {
 
     async addCategory() {
       let a = await new CategoryService().categoryAdd(this.category);
-      console.log("status", a);
       if (a.status === 200) {
         this.isSuccess = false;
         this.isSuccess = true;
@@ -371,7 +370,6 @@ export default {
     async addBrand() {
 
       let a = await new BrandService().addBrand(this.brand);
-      console.log("status", a);
       if (a.status === 200) {
         // this.isSuccess = false;
         // this.isSuccess = true;
@@ -418,9 +416,7 @@ export default {
 
     async updateBrands() {
 
-      console.log(this.updateBrand)
       let a = await new BrandService().updateBrand(this.updateBrand);
-      console.log("status", a);
       if (a.status === 200) {
         // this.isSuccess = false;
         // this.isSuccess = true;
@@ -458,9 +454,7 @@ export default {
 
     async deleteBrand() {
 
-      console.log(this.updateBrand)
       let a = await new BrandService().deleteBrand(this.deleteId);
-      console.log("statusDelete", a);
       if (a.status === 200) {
         // this.isSuccess = false;
         // this.isSuccess = true;
@@ -534,14 +528,12 @@ export default {
     },
     successHide() {
       setTimeout(() => (this.isSuccess = false), 5000);
-      console.log("naber");
     },
     errorHideCar() {
       setTimeout(() => (this.isErrorCar = false), 5000);
     },
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
-      console.log("naber");
     },
     async getCustomers() {
       let customersRes = await new CustomerService().customerGet('', '', '');
@@ -550,7 +542,6 @@ export default {
 
     async getBrands() {
       let response = await new BrandService().getBrands();
-      console.log(response)
 
       if (response.status === 200) {
         this.brands = response.data.data
@@ -564,9 +555,6 @@ export default {
     getCategories() {
 
       // get by search keyword
-      // console.log("search", this.search)
-      //console.log("pagination", this.pagination.page)
-      //console.log("pagination", this.pagination.rowsPerPage)
       this.loading = true;
       //const {page, itemsPerPage} = this.options;
       //let pageNumber = page;
@@ -575,7 +563,6 @@ export default {
       axios.get(process.env.VUE_APP_API_URL + "/car-service/category-api/", {headers: authHeader()})
           .then(res => {
             this.categories = res.data;
-            console.log("ssa", res)
             this.total = res.data.recordsTotal;
             this.numberOfPages = 2;
 
@@ -596,7 +583,6 @@ export default {
       axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api/", {headers: authHeader()})
           .then(res => {
             this.selectCategories = res.data;
-            console.log("ssa", res)
 
 
           })

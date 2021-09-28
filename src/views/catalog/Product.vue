@@ -369,13 +369,10 @@ export default {
       });
     },
 
-    deneme(){
-      console.log("ghg",this.category)
-    },
+
 
     async addCategory() {
       let a = await new CategoryService().categoryAdd(this.category);
-      console.log("status", a);
       if (a.status === 200) {
         this.isSuccess = false;
         this.isSuccess = true;
@@ -425,9 +422,6 @@ export default {
     getCategories() {
 
       // get by search keyword
-     // console.log("search", this.search)
-      //console.log("pagination", this.pagination.page)
-      //console.log("pagination", this.pagination.rowsPerPage)
       this.loading = true;
       //const {page, itemsPerPage} = this.options;
       //let pageNumber = page;
@@ -436,7 +430,6 @@ export default {
       axios.get(process.env.VUE_APP_API_URL + "/car-service/category-api/", {headers: authHeader()})
           .then(res => {
             this.categories = res.data;
-            console.log("ssa", res)
             this.total = res.data.recordsTotal;
             this.numberOfPages = 2;
 
@@ -457,7 +450,6 @@ export default {
       axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api/", {headers: authHeader()})
           .then(res => {
             this.selectCategories = res.data;
-            console.log("ssa", res)
 
 
           })

@@ -18,7 +18,6 @@ export const auth = {
   state: initialState,
   actions: {
     login({ commit }, user) {
-      console.log(user)
       return AuthService.login(user).then(
         response => {
           //commit('loginSuccess', user);

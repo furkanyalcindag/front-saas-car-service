@@ -22,7 +22,6 @@ class ServiceService {
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -67,8 +66,17 @@ class ServiceService {
 
     }
 
-    getServicesList() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api/`, {headers: authHeader()})
+    getServicesList(activePage,plate) {
+        var x = plate
+        if(plate ==null){
+            x=''
+        }
+        const params = {
+            activePage: activePage,
+            plate:x
+
+        };
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api/`, {headers: authHeader(),params})
 
 
     }
@@ -82,7 +90,6 @@ class ServiceService {
             headers: authHeader(),
             params
         }).then(response => {
-            console.log(response)
             return response;
         })
 
@@ -121,7 +128,6 @@ class ServiceService {
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -192,11 +198,9 @@ class ServiceService {
             return response;
         }).catch((err) => {
             if (err.response) {
-                console.log("resp", err.response)
                 return err.response
             } else if (err.request) {
                 // client never received a response, or request never left
-                console.log("req", err.request)
             } else {
                 // anything else
             }
@@ -226,7 +230,6 @@ class ServiceService {
 
                 return response;
             }).catch(error => {
-                console.log("hata", error)
                 return error
             });
 
@@ -243,7 +246,6 @@ class ServiceService {
 
                 return response;
             }).catch(error => {
-                console.log("hata", error)
                 return error
             });
         }

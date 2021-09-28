@@ -57,7 +57,6 @@ export default {
   },
   mounted() {
 
-    console.log(localStorage)
 
     this.username = localStorage.getItem('username')
     this.nameSurname = localStorage.getItem('user_name_surname')
@@ -66,7 +65,6 @@ export default {
   },
   watch: {
    nameSurname() {
-      console.log('Data Değişti');
        this.nameSurname = localStorage.getItem('user_name_surname')
       // isOpen datasındaki değişliği yakaladık.
    }

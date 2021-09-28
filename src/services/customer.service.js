@@ -22,12 +22,10 @@ class CustomerService {
                 taxOffice: customer.taxOffice
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -68,12 +66,10 @@ class CustomerService {
                 headers: authHeader(),
                 params
             }).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -100,12 +96,10 @@ class CustomerService {
                 headers: authHeader(),
                 params
             }).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -137,15 +131,12 @@ class CustomerService {
             headers: authHeader(),
             params
         }).then(response => {
-            console.log(response)
             return response;
         }).catch((err) => {
             if (err.response) {
-                console.log("resp", err.response)
                 return err.response
             } else if (err.request) {
                 // client never received a response, or request never left
-                console.log("req", err.request)
             } else {
                 // anything else
             }

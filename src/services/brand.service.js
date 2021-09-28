@@ -10,12 +10,10 @@ class BrandService {
                 name: brand.name,
 
             }, {headers: authHeader()}).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 
@@ -45,10 +43,8 @@ class BrandService {
 
         };
         return axios.delete(process.env.VUE_APP_API_URL + `/car-service/brand-api/`, {headers: authHeader(), params}).then(response => {
-            console.log(response)
             return response;
         }).catch(error => {
-            console.log("hata", error.data)
             return error;
         });
 
@@ -72,12 +68,10 @@ class BrandService {
                 headers: authHeader(),
                 params
             }).then(response => {
-            console.log(response)
 
 
             return response;
         }).catch(error => {
-            console.log("hata", error)
             return error
         });
 

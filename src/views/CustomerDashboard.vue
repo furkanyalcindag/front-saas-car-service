@@ -49,15 +49,15 @@ export default {
       data: {
 
 
-        productCount: 0,
-        outOfStockCount: 0,
-        carCount: 0,
-        customerCount: 0,
-        remainingDebt: 0,
-        uncompletedServiceCount: 0,
-        completedServiceCount: 0,
-        waitingApproveServiceCount: 0,
-        totalCheckingAccount:0
+        productCount: '0',
+        outOfStockCount: '0',
+        carCount: '0',
+        customerCount: '0',
+        remainingDebt: '0',
+        uncompletedServiceCount: '0',
+        completedServiceCount: '0',
+        waitingApproveServiceCount: '0',
+        totalCheckingAccount:'0'
 
 
       }
@@ -66,11 +66,10 @@ export default {
     }
   },
   methods: {
-     async setUser(){
-       let response = await  AuthService.getUserInfo()
-      console.log(response)
-      localStorage.setItem('user_name_surname',response.data)
-    },
+     // async setUser(){
+     //   let response = await  AuthService.getUserInfo()
+     //  localStorage.setItem('user_name_surname',response.data)
+    // },
 
     async getDashboardData() {
 
@@ -80,14 +79,12 @@ export default {
       })*/
 
       let response = await new DashboardService().getCustomerDashboard();
-      console.log(response)
       if(response.status===200){
         this.data = response.data
       }
       else {
         await this.$router.push("/pages/login");
       }
-      console.log(response)
 
 
 
@@ -101,7 +98,7 @@ export default {
       this.$router.push('/pages/login');
     }
 
-    await this.setUser()
+    // await this.setUser()
 
 
   },

@@ -21,7 +21,7 @@
     </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-envelope-open" /> Mesajlar
-      <CBadge color="success" class="ml-auto">{{ itemsCount2 }}</CBadge>
+      <CBadge color="success" class="ml-auto"></CBadge>
     </CDropdownItem>
   
     <CDropdownHeader
@@ -54,7 +54,6 @@ export default {
 
    mounted() {
 
-    console.log(localStorage)
 
     this.username = localStorage.getItem('username')
     this.nameSurname = localStorage.getItem('user_name_surname')
@@ -63,7 +62,6 @@ export default {
   },
   watch: {
    nameSurname() {
-      console.log('Data Değişti');
        this.nameSurname = localStorage.getItem('user_name_surname')
       // isOpen datasındaki değişliği yakaladık.
    }

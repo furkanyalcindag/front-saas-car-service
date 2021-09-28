@@ -69,7 +69,6 @@ class AuthService {
     }
     async regeneratePassword(email){
         return  axios.post(API_URL + '/car-service/password-regen/', {email}).then((response)=>{
-            console.log(response.data.message)
             return response;}).catch(error =>{
                 return error.response
             });

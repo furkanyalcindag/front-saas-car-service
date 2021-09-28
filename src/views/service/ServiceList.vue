@@ -23,25 +23,49 @@
             </CCardHeader>
             <template>
               <CCardBody>
-                <div>
-<!--                  <CAlert color="success" :show="isSuccess">-->
-<!--                    Servis Durumu Başarıyla Değiştirildi-->
-<!--                  </CAlert>-->
+                <CRow>
 
-                </div>
+                  <!--                  <CAlert color="success" :show="isSuccess">-->
+                  <!--                    Servis Durumu Başarıyla Değiştirildi-->
+                  <!--                  </CAlert>-->
+
+                  <CCol lg="6" style="float: right">
+
+
+                    <CInput
+
+                        description=""
+                        autocomplete="autocomplete"
+                        placeholder="Plaka"
+                        v-model="plateFilter"
+
+
+                    />
+
+                  </CCol>
+
+                  <CCol lg="3">
+
+
+                    <CButton @click="filterServices" color="success">Ara</CButton>
+
+                  </CCol>
+
+
+                </CRow>
 
                 <CDataTable
                     :items="computedItems"
                     :fields="fieldsTable"
-                    column-filter
+
                     :border="true"
-                    :items-per-page="10"
-                    :activePage="4"
+
                     :footer="true"
 
                     hover
-                    sorter
-                    pagination
+
+                    :loading="load"
+
                     :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
                     clickableRows
 
@@ -66,7 +90,7 @@
                           &#x1F4C2;<span class="sr-only">sss</span>
                         </template>
                         <!--<CDropdownItem @click="getServiceDetail(item.uuid)">Servis Detay</CDropdownItem> -->
-                        <CDropdownItem v-for="button in item.buttons" :key="button"
+                        <CDropdownItem v-for="(button,key) in item.buttons" :key="key"
                                        @click="generalService(item.uuid,button.buttonFunction)">
                           {{ button.buttonName }}
                         </CDropdownItem>
@@ -84,7 +108,21 @@
 
                     </CCollapse>
                   </template>
+
+
                 </CDataTable>
+
+                <template>
+                  <div>
+
+                    <CPagination
+                        :activePage.sync="page"
+                        :pages="pageCount"
+                        size="sm"
+                        align="end"
+                    />
+                  </div>
+                </template>
 
 
               </CCardBody>
@@ -151,7 +189,7 @@
         :draggable="false"
         title="Modal title 2"
         :backdrop="true"
-        size="s"
+        size="sm"
         color="dark"
     >
       <CRow>
@@ -160,18 +198,18 @@
             <CCard v-if="receivingModal">
               <template>
                 <CCardBody>
-<!--                  <div>-->
+                  <!--                  <div>-->
 
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errors"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errors"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
                   <CRow>
                     <CCol lg="12">
                       <CInput
@@ -310,11 +348,14 @@ export default {
         {key: 'serviceType', label: "Servis Tipi", _style: "min-width:200px"},
         {key: "plate", label: "Plaka"},
         {key: "serviceKM", label: "KM"},
+        {key: "firmName", label: "Firma Adı"},
         {key: "serviceSituation", label: "Durum"},
         {key: "serviceman", label: "Usta"},
         {key: "creationDate", label: "Tarih"},
         {key: "buttons", label: "İşlemler"},
       ],
+      load: false,
+      pageCount: 0,
       pageLabel: {label: 'sasasa', external: true,},
       page: 1,
       numberOfPages: 0,
@@ -385,9 +426,10 @@ export default {
       serviceId: '',
       cameraModal: false,
       camera: '',
-      deleteId : '',
-      deleteModal : false,
-      deleteButton:false
+      deleteId: '',
+      deleteModal: false,
+      deleteButton: false,
+      plateFilter: ''
     };
   },
 
@@ -420,10 +462,14 @@ export default {
       }
     },
 
-    groupControl(){
-      if(localStorage.getItem("user_group")==="Admin"){
+    groupControl() {
+      if (localStorage.getItem("user_group") === "Admin") {
         this.deleteButton = true
       }
+    },
+
+    filterServices() {
+      this.getServiceFilterList(this.activePage)
     },
 
 
@@ -435,14 +481,10 @@ export default {
       });
     },
 
-    deneme() {
-      console.log("ghg", this.category)
-    },
 
     getBase64(event) {
       var reader = new FileReader();
       reader.readAsDataURL(event[0]);
-      console.log("sdsd", product)
       this.selectedFile = event.length + ' dosya seçildi'
       var x = this
       reader.onload = function () {
@@ -459,22 +501,45 @@ export default {
     }
     ,
 
-    denemes() {
 
-      console.log("kjjkhsjkak")
-      return this.messages
-    },
-    async getServiceList() {
+    async getServiceList(activePage) {
 
+      this.load = true
       /*this.$toast.success({
         title:'',
         message:this.denemes()
       })*/
 
-      let response = await new ServiceService().getServicesList();
-      console.log(response)
+
+      let response = await new ServiceService().getServicesList(activePage);
+
+      this.plateFilter = ""
+      console.log(response.data)
 
       this.services = response.data.data
+      this.pageCount = response.data.activePage
+      this.load = false
+
+    },
+
+    async getServiceFilterList(activePage) {
+
+      this.load = true
+      /*this.$toast.success({
+        title:'',
+        message:this.denemes()
+      })*/
+
+
+      console.log("plateFilter", this.plateFilter)
+
+      let response = await new ServiceService().getServicesList(activePage, this.plateFilter);
+
+      console.log(response.data)
+
+      this.services = response.data.data
+      this.pageCount = response.data.activePage
+      this.load = false
 
     },
 
@@ -482,7 +547,6 @@ export default {
     async getServiceDetail(id) {
 
       let response = await new ServiceService().getServiceDetail(id);
-      console.log(response)
 
 
       this.serviceDetail = response.data
@@ -515,14 +579,12 @@ export default {
     },
     successHide() {
       setTimeout(() => (this.isSuccess = false), 5000);
-      console.log("naber");
     },
     errorHideCar() {
       setTimeout(() => (this.isErrorCar = false), 5000);
     },
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
-      console.log("naber");
     },
     async getCustomers() {
       let customersRes = await new CustomerService().customerGet('', '', '');
@@ -531,9 +593,9 @@ export default {
 
     intervalFetchData: async function () {
       setInterval(() => {
-        this.getServiceList();
+        this.getServiceList(this.page);
 
-      }, 10000);
+      }, 30000);
     },
 
     goServiceDetermation(serviceId) {
@@ -560,7 +622,6 @@ export default {
           title: 'Bilgi',
           message: 'Servis silme işlemi başarıyla gerçekleşti'
         })
-        console.log("statusDelete", a);
         await this.getProducts();
 
       } else if (a.status === 401) {
@@ -583,7 +644,6 @@ export default {
     async goWatchCamera(serviceId) {
       let cameraRes = await new ServiceService().getServiceCamera(serviceId)
 
-      console.log("camera", cameraRes)
       this.camera = cameraRes.data.camera
 
       this.cameraModal = true
@@ -600,7 +660,6 @@ export default {
     async serviceProcess(serviceId, situationNo, receivingPerson) {
 
       let response = await new ServiceService().ServiceProcessing(serviceId, situationNo, receivingPerson);
-      //console.log(response)
 
       if (response.status === 200) {
         this.isSuccess = true
@@ -609,7 +668,7 @@ export default {
         this.receivingModal = false
         this.$toast.success({
           title: 'Bilgi',
-          message: 'İşlem başarılı'
+          message: 'İşlem başarıyla tamamlandı'
         })
       }
 
@@ -652,8 +711,7 @@ export default {
 
         this.goWatchCamera(serviceId)
 
-      }
-       else if (functionName === 'serviceDelete') {
+      } else if (functionName === 'serviceDelete') {
 
         this.serviceDeleteModal(serviceId)
 
@@ -670,7 +728,14 @@ export default {
 
   },
 
-  watch: {},
+  watch: {
+
+    page: function (val) {
+      console.log(val)
+      this.getServiceList(this.page)
+
+    },
+  },
 
   created() {
 
@@ -678,7 +743,7 @@ export default {
   },
   mounted() {
     this.groupControl()
-    this.getServiceList()
+    this.getServiceList(this.page)
     this.intervalFetchData()
 
 

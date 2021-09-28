@@ -323,7 +323,7 @@ export default {
       showServiceDetail: false,
       service: new Service(),
       services: [],
-      serviceDetail: null,
+      serviceDetail: [],
       carPlate: '',
       barcodeSearch: '',
       carts: [],
@@ -392,7 +392,6 @@ export default {
       axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api/", {headers: authHeader()})
           .then(res => {
             this.selectCategories = res.data;
-            console.log("ssa", res)
 
 
           })
@@ -404,7 +403,6 @@ export default {
     async addDetermination() {
 
       let response = await new ServiceService().addServiceDetermination(this.$route.params.serviceId, this.imagesPost, this.carts, this.determination);
-      //console.log(response)
 
       if (response.status === 200) {
 
@@ -426,7 +424,6 @@ export default {
     async acceptOrCanceledService(isAccept) {
 
       let response = await new ServiceService().acceptService(this.$route.params.serviceId, isAccept);
-      //console.log(response)
 
       if (response.status === 200) {
 
@@ -454,14 +451,11 @@ export default {
       });
     },
 
-    deneme() {
-      console.log("ghg", this.category)
-    },
+
 
     getBase64(event) {
       var reader = new FileReader();
       reader.readAsDataURL(event[0]);
-      console.log("sdsd", product)
       this.selectedFile = event.length + ' dosya seçildi'
       var x = this
       reader.onload = function () {
@@ -481,7 +475,6 @@ export default {
     async getServiceList() {
 
       let response = await new ServiceService().getServicesList();
-      console.log(response)
 
       this.services = response.data.data
 
@@ -490,7 +483,6 @@ export default {
     async getServicProducts(id) {
 
       let response = await new ServiceService().getServiceProducts(id);
-      console.log(response)
 
 
       this.serviceProducts = response.data
@@ -512,7 +504,6 @@ export default {
     async getServiceDetail(id) {
 
       let response = await new ServiceService().getServiceDetail(id);
-      console.log(response)
 
 
       this.serviceDetail = response.data
@@ -537,14 +528,12 @@ export default {
     },
     async getServicePdf(id=this.$route.params.serviceId) {
       let response = await new ServiceService().getServicePdf(id);
-      console.log(response)
     },
 
     async getSearchProduct() {
 
       this.products = []
       let response = await new ProductService().getSearchProduct(this.barcodeSearch);
-      console.log(response.data)
 
       this.products = response.data
 
@@ -552,13 +541,10 @@ export default {
     },
 
     addCart(name, uuid, quantity, netPrice) {
-      console.log("netPrice", netPrice)
 
       let cartItem = new Cart(uuid, name, quantity, netPrice)
 
-      console.log("item", cartItem)
       this.carts.push(cartItem)
-      console.log(this.carts)
       this.calculateCartTotal()
 
 
@@ -568,7 +554,6 @@ export default {
 
 
       this.carts.splice(index, 1)
-      console.log(this.carts)
       this.calculateCartTotal()
 
 
@@ -576,7 +561,6 @@ export default {
 
     calculateCartTotal() {
       let x = 0
-      console.log("asasasa", this.carts)
       for (let i = 0; i < this.carts.length; i++) {
 
         x = parseFloat(x) + parseFloat(this.carts[i].netPrice);
@@ -608,14 +592,12 @@ export default {
     },
     successHide() {
       setTimeout(() => (this.isSuccess = false), 5000);
-      console.log("naber");
     },
     errorHideCar() {
       setTimeout(() => (this.isErrorCar = false), 5000);
     },
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
-      console.log("naber");
     },
     async getCustomers() {
       let customersRes = await new CustomerService().customerGet('', '', '');
@@ -629,28 +611,22 @@ export default {
       }, 10000);
     },
     uploadImageSuccess(formData, index, fileList) {
-      console.log('data', formData, index, fileList)
-      console.log("ddd", fileList)
       this.imagesPost = fileList
       // Upload image api
       // axios.post('http://your-url-upload', formData).then(response => {
-      //   console.log(response)
       // })
     },
     beforeRemove(index, done, fileList) {
-      console.log('index', index, fileList)
       done()
       this.imagesPost = fileList
 
 
     },
     editImage(formData, index, fileList) {
-      console.log('edit data', formData, index, fileList)
       this.imagesPost = fileList
     },
     async addProduct() {
 
-      console.log("deneme", this.product)
 
       this.product.isOpen = true
 

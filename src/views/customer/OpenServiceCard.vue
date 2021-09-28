@@ -308,16 +308,13 @@ export default {
     },
 
     isCorporateControl() {
-      console.log(this.isCorporate);
       this.isCorporate = !this.isCorporate;
       this.customer.isCorporate = this.isCorporate;
     },
     addCarModal(profileUuid) {
 
-      console.log("uuid", profileUuid)
       this.carModal = true
       this.car.profileUuid = profileUuid
-      console.log("car", this.car)
 
     },
 
@@ -326,14 +323,12 @@ export default {
     },
     successHide() {
       setTimeout(() => (this.isSuccess = false), 5000);
-      console.log("naber");
     },
     errorHideCar() {
       setTimeout(() => (this.isErrorCar = false), 5000);
     },
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
-      console.log("naber");
     },
 
 
@@ -364,7 +359,6 @@ export default {
     async getCarServices() {
 
       let response = await new ServiceService().getCarServices(this.$route.params.carId);
-      console.log(response)
 
       this.services = response.data
 
@@ -380,7 +374,6 @@ export default {
     async addOpenServiceCard() {
       this.service.carUUID = this.$route.params.carId
       let a = await new ServiceService().addService(this.service);
-      console.log("status", a);
       if (a.status === 200) {
         // this.isSuccess = false;
         // this.isSuccess = true;
@@ -408,7 +401,6 @@ export default {
       } else {
         /*this.isError = false;
         this.isError = true;*/
-        console.log("error son", a.response)
         this.errors = a.response.data;
         for (const [key, value] of Object.entries(this.errors)){
           this.$toast.error({
@@ -436,7 +428,6 @@ export default {
     this.getCar()
     this.getCarServices()
     this.getCamerasSelect()
-    console.log(this.$route.params.carId)
 
 
   }
