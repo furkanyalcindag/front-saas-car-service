@@ -348,6 +348,7 @@ export default {
         {key: 'serviceType', label: "Servis Tipi", _style: "min-width:200px"},
         {key: "plate", label: "Plaka"},
         {key: "serviceKM", label: "KM"},
+        {key: "firmName", label: "Firma Adı"},
         {key: "serviceSituation", label: "Durum"},
         {key: "serviceman", label: "Usta"},
         {key: "creationDate", label: "Tarih"},
@@ -428,7 +429,7 @@ export default {
       deleteId: '',
       deleteModal: false,
       deleteButton: false,
-      plateFilter:''
+      plateFilter: ''
     };
   },
 
@@ -467,7 +468,7 @@ export default {
       }
     },
 
-    filterServices(){
+    filterServices() {
       this.getServiceFilterList(this.activePage)
     },
 
@@ -512,7 +513,7 @@ export default {
 
       let response = await new ServiceService().getServicesList(activePage);
 
-      this.plateFilter=""
+      this.plateFilter = ""
       console.log(response.data)
 
       this.services = response.data.data
@@ -532,7 +533,7 @@ export default {
 
       console.log("plateFilter", this.plateFilter)
 
-      let response = await new ServiceService().getServicesList(activePage,this.plateFilter);
+      let response = await new ServiceService().getServicesList(activePage, this.plateFilter);
 
       console.log(response.data)
 
