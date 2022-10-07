@@ -1,5 +1,5 @@
 import AuthService from '../services/auth.service';
-import {use} from "vee-validate/dist/vee-validate.minimal.esm";
+//import {use} from "vee-validate/dist/vee-validate.minimal.esm";
 
 let user=null
 if(localStorage!=null&&localStorage.getItem('user')!=null){

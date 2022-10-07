@@ -5,11 +5,15 @@ module.exports = {
             {
                 useBuiltIns: 'entry',
                 corejs: 3
-            }
-        ]
+            },
+            '@babel/preset-react',
+
+        ],
+          "@vue/babel-preset-jsx"
     ],
     "plugins": [
         [
+
             "@babel/plugin-transform-runtime",
             {
                 // "absoluteRuntime": false,
@@ -17,7 +21,8 @@ module.exports = {
                 // "helpers": true,
                 "regenerator": true,
                 // "useESModules": false
-            }
+            },
+
         ]]
 
 }

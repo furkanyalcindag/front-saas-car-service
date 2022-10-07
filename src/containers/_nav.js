@@ -4,7 +4,8 @@ const groups = {
     admin:"Admin",
     serviceman:"Tamirci",
     customer:"Customer",
-    accountant:"Muhasebe"
+    accountant:"Muhasebe",
+    systemAdmin:"SystemAdmin"
 }
 
 var dashboard_link = ""
@@ -80,6 +81,34 @@ const catalog ={
         }
     ]
 }
+
+
+const management ={
+    _name: 'CSidebarNavDropdown',
+    name: 'Management',
+    route: '/management/dashboard',
+    icon: 'cil-playlist-add',
+    items: [
+        {
+            name: 'Dashboard',
+            to: '/management/dashboard'
+        },
+        {
+            name: 'Plan',
+            to: '/management/plan'
+        },
+        {
+            name: 'Organizasyon',
+            to: '/management/organization'
+        },
+        {
+            name: 'Kullanıcılar',
+            to: '/management/user'
+        }
+    ]
+}
+
+
 const staff = {
     _name: 'CSidebarNavDropdown',
     name: 'Personel',
@@ -128,6 +157,12 @@ if(user_group === groups.admin)
 if(user_group === groups.admin || user_group === groups.serviceman || user_group===groups.customer)
 {
     items.push(services)
+}
+
+if(user_group===groups.systemAdmin)
+{
+    console.log(groups.systemAdmin)
+    items.push(management)
 }
 export default [
     {

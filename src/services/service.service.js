@@ -15,8 +15,6 @@ class ServiceService {
                 responsiblePerson: service.responsiblePerson,
                 serviceman: service.serviceman,
                 camera:service.camera
-
-
             }, {headers: authHeader()}).then(response => {
 
 
