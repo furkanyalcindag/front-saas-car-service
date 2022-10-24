@@ -98,6 +98,8 @@ const ManagementPlan = () => import('@/views/management/Plan')
 
 const ManagementUser = () => import('@/views/management/User')
 
+const ManagementOrganizationPlan = () => import('@/views/management/OrganizationPlan')
+
 
 
 Vue.use(Router)
@@ -113,7 +115,7 @@ function configRoutes() {
     const user_group = UserService.getUserGroup()
     const groups = {
         systemAdmin:"SystemAdmin",
-        admin:"Admin",
+        admin:"Owner",
         serviceman:"Tamirci",
         customer:"Customer",
         accountant:"Muhasebe"
@@ -318,7 +320,12 @@ function configRoutes() {
                             path: 'user',
                             name: 'ManagementUser',
                             component: ManagementUser
-                        }
+                        },
+                        {
+                            path: 'organization-plan/:organizationId',
+                            name: 'ManagementOrganizationPlan',
+                            component: ManagementOrganizationPlan
+                        },
 
 
                     ]

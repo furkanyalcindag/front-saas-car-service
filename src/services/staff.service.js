@@ -24,7 +24,7 @@ class StaffService {
 
 
     addStaff(staff) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/staff-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/staff-api',
             {
                 firstName: staff.firstName,
                 lastName: staff.lastName,
@@ -54,7 +54,7 @@ class StaffService {
         };
 
 
-        return axios.put(process.env.VUE_APP_API_URL + '/car-service/staff-api/',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/staff-api',
             {
 
                firstName: staff.firstName,
@@ -82,7 +82,7 @@ class StaffService {
 
 
     getStaffs() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/staff-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/staff-api`, {headers: authHeader()})
 
 
     }
@@ -92,13 +92,13 @@ class StaffService {
             id: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/staff-api/`, {headers: authHeader(), params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/staff-api`, {headers: authHeader(), params})
 
 
     }
 
     getServicemanSelect() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/serviceman-select-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/serviceman-select-api`, {headers: authHeader()})
 
 
     }

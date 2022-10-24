@@ -82,7 +82,7 @@
                     />
                     <CSelect
                         :options="cameras"
-                        label="Kamera (Zorunlu Alan)"
+                        label="Kamera"
                         v-model="service.camera"
                         :value.sync="service.camera"
 

@@ -79,7 +79,7 @@ class OrganizationService {
         const params = {
             uuid: organization.uuid
         };
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/saas/organization-api',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/saas/organization-api',
             {
                 name: organization.name,
                 firstName: organization.firstName,
@@ -169,6 +169,42 @@ class OrganizationService {
         }).catch(error => {
             return error
         });
+
+
+    }
+
+
+
+    getOrganizationPlans(activePage, count, uuid) {
+
+
+        const params = {
+            activePage: activePage,
+            count: count,
+            uuid:uuid
+        };
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/management/organization-plan-api`, {
+            headers: authHeader(),
+            params
+        })
+    }
+
+    addOrganizationPlan(choosedPlan,organizationUuid){
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/management/organization-plan-api',
+            {
+                planUuid: choosedPlan.uuid,
+                organizationUuid:organizationUuid,
+                subscriptionType: choosedPlan.subscriptionType,
+
+            }, {headers: authHeader()}).then(response => {
+
+
+            return response;
+        }).catch(error => {
+            return error
+        });
+
+
 
 
     }

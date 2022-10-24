@@ -80,6 +80,7 @@ export default {
         {key: 'netPriceMonthly', label: "Aylık Net", _style: "min-width:100px"},
         {key: 'netPriceYearly', label: "Yıllık Net", _style: "min-width:100px"},
         {key: 'taxRate', label: "Vergi Oranı", _style: "min-width:100px"},
+        {key: 'sms', label: "SMS", _style: "min-width:100px"},
         {key: "actions", label: "İşlemler"}
       ],
     }

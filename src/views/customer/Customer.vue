@@ -8,9 +8,9 @@
               <CIcon name="cil-pencil"/>
               Müşteri
               <div class="card-header-actions">
-<!--                <CLink href="#" class="card-header-action btn-setting">-->
-<!--                  <CIcon name="cil-settings"/>-->
-<!--                </CLink>-->
+                <!--                <CLink href="#" class="card-header-action btn-setting">-->
+                <!--                  <CIcon name="cil-settings"/>-->
+                <!--                </CLink>-->
                 <CLink
                     class="card-header-action btn-minimize"
                     @click="formCollapsed = !formCollapsed"
@@ -19,32 +19,32 @@
                       :name="`cil-chevron-${formCollapsed ? 'bottom' : 'top'}`"
                   />
                 </CLink>
-<!--                <CLink-->
-<!--                    href="#"-->
-<!--                    class="card-header-action btn-close"-->
-<!--                    v-on:click="show = !show"-->
-<!--                >-->
-<!--                  <CIcon name="cil-x-circle"/>-->
-<!--                </CLink>-->
+                <!--                <CLink-->
+                <!--                    href="#"-->
+                <!--                    class="card-header-action btn-close"-->
+                <!--                    v-on:click="show = !show"-->
+                <!--                >-->
+                <!--                  <CIcon name="cil-x-circle"/>-->
+                <!--                </CLink>-->
               </div>
             </CCardHeader>
             <CCollapse :show="formCollapsed">
               <CCardBody>
-<!--                  <div>-->
-<!--                  <CAlert color="success" :show="isSuccess">-->
-<!--                    Müşteri başarıyla kaydedildi.-->
-<!--                  </CAlert>-->
+                <!--                  <div>-->
+                <!--                  <CAlert color="success" :show="isSuccess">-->
+                <!--                    Müşteri başarıyla kaydedildi.-->
+                <!--                  </CAlert>-->
 
 
-<!--                  <CAlert-->
-<!--                      v-for="(value,key) in errors"-->
-<!--                      :key="value.message"-->
-<!--                      color="danger"-->
-<!--                      :show="isError"-->
-<!--                  >-->
-<!--                    {{ key }}: {{ value[0] }}-->
-<!--                  </CAlert>-->
-<!--                </div>-->
+                <!--                  <CAlert-->
+                <!--                      v-for="(value,key) in errors"-->
+                <!--                      :key="value.message"-->
+                <!--                      color="danger"-->
+                <!--                      :show="isError"-->
+                <!--                  >-->
+                <!--                    {{ key }}: {{ value[0] }}-->
+                <!--                  </CAlert>-->
+                <!--                </div>-->
                 <CRow></CRow>
                 <CRow>
                   <CCol lg="4">
@@ -151,84 +151,84 @@
             <template>
               <CCardBody>
                 <template>
-                <CDataTable
-                    v-if="!list"
-                    :items="computedItems"
-                    :fields="fieldsTable"
-                    column-filter
-                    :border="true"
-                    :items-per-page="5"
-                    :activePage="4"
-                    hover
-                    sorter
-                    pagination
-                    :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
-                    clickableRows
+                  <CDataTable
+                      v-if="!list"
+                      :items="computedItems"
+                      :fields="fieldsTable"
+                      column-filter
+                      :border="true"
+                      :items-per-page="5"
+                      :activePage="4"
+                      hover
+                      sorter
+                      pagination
+                      :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
+                      clickableRows
 
-                >
-                  <template #mail="{ item, index }">
-                    <td class="py-2">
+                  >
+                    <template #mail="{ item, index }">
+                      <td class="py-2">
 
-                      <CButtonGroup class="mx-1 d-sm-down-none" v-if="showCustomerForm">
-                        <CSwitch  @update:checked="sendMailPreferences(item.uuid)"  class="mx-1" color="success" :checked="item.isSendMail" variant="3d" />
+                        <CButtonGroup class="mx-1 d-sm-down-none" v-if="showCustomerForm">
+                          <CSwitch  @update:checked="sendMailPreferences(item.uuid)"  class="mx-1" color="success" :checked="item.isSendMail" variant="3d" />
 
-                      </CButtonGroup>
-
-
-                    </td>
-                  </template>
-
-                  <template #actions="{ item, index }">
-                    <td class="py-2">
-
-                      <CButtonGroup class="mx-1 d-sm-down-none" v-if="showCustomerForm">
-
-                        <CButton @click="sendPassword(item.uuid)" color="dark">Şifre Gönder</CButton>
-                        <CButton @click="getCarPagination(item.uuid)" color="primary">Araç</CButton>
-                        <CButton @click="addCarModal(item.uuid)" color="info">Araç Ekle</CButton>
-                        <CButton @click="getAccountList(item.uuid)" color="success">Cari</CButton>
-                        <CButton v-if="showCustomerForm" @click="setDeleteModalCustomer(item.uuid)" color="danger">Sil</CButton>
-                        <CButton @click="getSingleCustomer(item.uuid)" color="warning">Güncelle</CButton>
-                      </CButtonGroup>
+                        </CButtonGroup>
 
 
-                    </td>
-                  </template>
-                  <template #details="{ item }">
-                    <CCollapse
-                        :show="Boolean(item._toggled)"
-                        :duration="collapseDuration"
-                    >
+                      </td>
+                    </template>
 
-                    </CCollapse>
-                  </template>
-                </CDataTable>
+                    <template #actions="{ item, index }">
+                      <td class="py-2">
 
-                <CDataTable
-                     v-else
-                    :items="computedItems"
-                    :fields="fieldsTableCustomer"
-                    column-filter
-                    :border="true"
-                    :items-per-page="5"
-                    :activePage="4"
-                    hover
-                    sorter
-                    pagination
-                    :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
-                    clickableRows
+                        <CButtonGroup class="mx-1 d-sm-down-none" v-if="showCustomerForm">
 
-                >
-                  <template #details="{ item }">
-<!--                    <CCollapse-->
-<!--                        :show="Boolean(item._toggled)"-->
-<!--                        :duration="collapseDuration"-->
-<!--                    >-->
+                          <CButton @click="sendPassword(item.uuid)" color="dark">Şifre Gönder</CButton>
+                          <CButton @click="getCarPagination(item.uuid)" color="primary">Araç</CButton>
+                          <CButton @click="addCarModal(item.uuid)" color="info">Araç Ekle</CButton>
+                          <CButton @click="getAccountList(item.uuid)" color="success">Cari</CButton>
+                          <CButton v-if="showCustomerForm" @click="setDeleteModalCustomer(item.uuid)" color="danger">Sil</CButton>
+                          <CButton @click="getSingleCustomer(item.uuid)" color="warning">Güncelle</CButton>
+                        </CButtonGroup>
 
-<!--                    </CCollapse>-->
-                  </template>
-                </CDataTable>
-                  </template>
+
+                      </td>
+                    </template>
+                    <template #details="{ item }">
+                      <CCollapse
+                          :show="Boolean(item._toggled)"
+                          :duration="collapseDuration"
+                      >
+
+                      </CCollapse>
+                    </template>
+                  </CDataTable>
+
+                  <CDataTable
+                      v-else
+                      :items="computedItems"
+                      :fields="fieldsTableCustomer"
+                      column-filter
+                      :border="true"
+                      :items-per-page="5"
+                      :activePage="4"
+                      hover
+                      sorter
+                      pagination
+                      :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
+                      clickableRows
+
+                  >
+                    <template #details="{ item }">
+                      <!--                    <CCollapse-->
+                      <!--                        :show="Boolean(item._toggled)"-->
+                      <!--                        :duration="collapseDuration"-->
+                      <!--                    >-->
+
+                      <!--                    </CCollapse>-->
+                    </template>
+                  </CDataTable>
+                </template>
 
 
               </CCardBody>
@@ -255,9 +255,9 @@
               <template>
                 <CCardBody>
 
-<!--                  <CAlert color="success" :show="isSuccessCarDelete">-->
-<!--                    Araç başarıyla silindi.-->
-<!--                  </CAlert>-->
+                  <!--                  <CAlert color="success" :show="isSuccessCarDelete">-->
+                  <!--                    Araç başarıyla silindi.-->
+                  <!--                  </CAlert>-->
 
                   <CDataTable
                       :items="computedItemsCar"
@@ -332,21 +332,21 @@
               <template>
                 <CCardBody>
 
-<!--                  <div>-->
-<!--                    <CAlert color="success" :show="isSuccessCar">-->
-<!--                      Araba başarıyla kaydedildi.-->
-<!--                    </CAlert>-->
+                  <!--                  <div>-->
+                  <!--                    <CAlert color="success" :show="isSuccessCar">-->
+                  <!--                      Araba başarıyla kaydedildi.-->
+                  <!--                    </CAlert>-->
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errorsCar"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isErrorCar"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errorsCar"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isErrorCar"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
 
-<!--                  </div>-->
+                  <!--                  </div>-->
 
 
                   <CRow>
@@ -481,20 +481,20 @@
               <template>
                 <CCardBody>
 
-<!--                  <div>-->
-<!--                    <CAlert color="success" :show="isSuccessCar">-->
-<!--                      Araba başarıyla kaydedildi.-->
-<!--                    </CAlert>-->
+                  <!--                  <div>-->
+                  <!--                    <CAlert color="success" :show="isSuccessCar">-->
+                  <!--                      Araba başarıyla kaydedildi.-->
+                  <!--                    </CAlert>-->
 
-<!--                    <CAlert-->
-<!--                        v-for="item in errorsCar"-->
-<!--                        :key="item.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      E-mail: {{ item }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="item in errorsCar"-->
+                  <!--                        :key="item.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      E-mail: {{ item }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
 
 
                   <CRow>
@@ -628,23 +628,23 @@
               <template>
                 <CCardBody>
 
-<!--                  <div>-->
-<!--                    <CAlert color="success" :show="isSuccessCar">-->
-<!--                      Müşteri başarıyla kaydedildi.-->
-<!--                    </CAlert>-->
+                  <!--                  <div>-->
+                  <!--                    <CAlert color="success" :show="isSuccessCar">-->
+                  <!--                      Müşteri başarıyla kaydedildi.-->
+                  <!--                    </CAlert>-->
 
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errorsCustomer"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isErrorCustomerUpdate"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errorsCustomer"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isErrorCustomerUpdate"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
 
 
-<!--                  </div>-->
+                  <!--                  </div>-->
 
 
                   <CRow>
@@ -867,7 +867,7 @@ export default {
       carUpdateUUID: '',
       isErrorCustomerUpdate: false,
       errorsCustomer: [],
-      showCustomerForm: false,
+      showCustomerForm: true,
       list:false
     };
   },
@@ -946,7 +946,7 @@ export default {
           this.$toast.error({
             title: 'Hata',
             message: `${key}: ${value}`
-        })
+          })
         }
         this.errorHide();
       }
@@ -982,9 +982,9 @@ export default {
     async sendPassword(id) {
 
       this.$toast.info({
-          title: 'Bilgi',
-          message: "Şifre gönderiliyor ve mail ayarları açılıyor"
-        });
+        title: 'Bilgi',
+        message: "Şifre gönderiliyor ve mail ayarları açılıyor"
+      });
       let a = await new CustomerService().customerSendPassword(id,'password');
       if (a.status === 200) {
         this.$toast.removeAll()
@@ -999,7 +999,7 @@ export default {
         this.errorHideUpdateCustomer();
         await this.$router.push("/pages/login");
       } else {
-       this.$toast.error({
+        this.$toast.error({
           title: 'Hata',
           message: "Lütfen daha sonra tekrar deneyin."
         });
@@ -1031,9 +1031,9 @@ export default {
         this.errorsCustomer = a.response.data;
         for (const [key,value] of Object.entries(this.errorsCustomer)){
           this.$toast.error({
-          title: 'Başarılı',
-          message: `${key}: ${value}`
-        });
+            title: 'Başarılı',
+            message: `${key}: ${value}`
+          });
         }
         this.errorHideUpdateCustomer();
       }
@@ -1194,7 +1194,7 @@ export default {
           this.$toast.error({
             title: 'Hata',
             message: `${key}: ${value}`
-        })
+          })
         }
         this.errorHide();
       }
@@ -1211,7 +1211,7 @@ export default {
       const {page, itemsPerPage} = this.options;
       let pageNumber = page;
 
-      axios.get(process.env.VUE_APP_API_URL + `/car-service/car-api/?uuid=${uuid}`, {headers: authHeader()})
+      axios.get(process.env.VUE_APP_API_URL + `/car-service/car-api?uuid=${uuid}`, {headers: authHeader()})
           .then(res => {
             this.cars = res.data;
             //this.total = res.data.recordsTotal;
@@ -1254,7 +1254,7 @@ export default {
           this.$toast.error({
             title: 'Hata',
             message: `${key}: ${value}`
-        })
+          })
         }
         this.errorHideCar();
       }
@@ -1318,7 +1318,7 @@ export default {
           this.$toast.error({
             title: 'Hata',
             message: `${key}: ${value}`
-        })
+          })
         }
         this.errorHide();
       }

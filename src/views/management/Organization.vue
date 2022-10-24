@@ -506,6 +506,7 @@ export default {
           <CButtonGroup class="mx-1 d-sm-down-none">
             <CButton color="danger" on-click={() => this.showAddModalFunction()}>Sil</CButton>
             <CButton color="warning" on-click={() => this.prepareUpdateOrganization(row.uuid)}>Güncelle</CButton>
+            <CButton color="primary" on-click={() => this.$router.push({name: 'ManagementOrganizationPlan', params: { organizationId: row.uuid}})}>Plan</CButton>
           </CButtonGroup>
 
 
@@ -581,8 +582,9 @@ export default {
 
 
         }
-        this.loadingInstance.close()
+
       }
+      this.loadingInstance.close()
     },
 
 
@@ -595,10 +597,10 @@ export default {
         if (response.status === 200) {
           // this.isSuccess = false;
           // this.isSuccess = true;
-          this.showAddOrganizationModal = false;
+          this.showUpdateOrganizationModal = false;
           this.successHide();
           await this.getOrganizationList(this.pageIndex + 1, this.pageSize, this.searchValue)
-          this.organization = new Organization()
+          this.organizationUpdate = new Organization()
 
           this.$toast.open({
             message: 'işlem Başarılı!',

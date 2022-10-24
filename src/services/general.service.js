@@ -5,7 +5,7 @@ class GeneralService {
 
 
     getGroups() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/group-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/group-api`, {headers: authHeader()})
     }
 
     static showToast(msg, type) {

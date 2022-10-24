@@ -108,7 +108,7 @@ export default {
     handleLogin() {
     //  const user_group = UserService.getUserGroup()
       const groups = {
-        admin: "Admin",
+        admin: "Owner",
         serviceman: "Tamirci",
         customer: "Customer",
         accountant: "Muhasebe",

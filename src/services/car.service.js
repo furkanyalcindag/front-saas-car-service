@@ -11,7 +11,7 @@ class CarService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-car-by-id-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-car-by-id-api`, {
             headers: authHeader(),
             params
         })
@@ -21,7 +21,7 @@ class CarService {
 
 
     carAdd(car) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/car-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/car-api',
             {
                 profileUuid: car.profileUuid,
                 plate: car.plate,
@@ -51,7 +51,7 @@ class CarService {
             id: id
 
         };
-        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/car-api/`, {
+        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/car-api`, {
             headers: authHeader(),
             params
         }).then(response => {
@@ -75,7 +75,7 @@ class CarService {
             id: uuid
 
         };
-        return axios.put(process.env.VUE_APP_API_URL + '/car-service/car-api/',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/car-api',
 
             {
                 profileUuid: car.profileUuid,

@@ -5,7 +5,7 @@ import authHeader from "@/services/auth-header";
 class CategoryService {
 
     categoryAdd(category) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/category-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/category-api',
             {
                 name: category.name,
                 parent: category.parent,
@@ -30,7 +30,7 @@ class CategoryService {
         };
 
 
-        return axios.put(process.env.VUE_APP_API_URL + '/car-service/category-api/',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/category-api',
             {
 
                 name: category.name,
@@ -56,7 +56,7 @@ class CategoryService {
             id: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/category-api/`, {headers: authHeader(), params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/category-api`, {headers: authHeader(), params})
 
 
     }
@@ -67,7 +67,7 @@ class CategoryService {
             id: id
 
         };
-        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/category-api/`, {
+        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/category-api`, {
             headers: authHeader(),
             params
         }).then(response => {

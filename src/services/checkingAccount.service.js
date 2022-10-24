@@ -5,7 +5,7 @@ class CheckingAccountService {
 
     checkingAccountList() {
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/checking-account-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/checking-account-api`, {headers: authHeader()})
 
 
     }
@@ -17,19 +17,19 @@ class CheckingAccountService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/checking-customer-account-api/`, {headers: authHeader(),params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/checking-customer-account-api`, {headers: authHeader(),params})
 
 
     }
 
     getPaymentType() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/payment-type-select-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/payment-type-select-api`, {headers: authHeader()})
 
 
     }
 
     addPayment(payment) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/payment-account-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/payment-account-api',
             {
                 checkingAccountUUID: payment.uuid,
                 paymentAmount: payment.paymentAmount,
@@ -48,7 +48,7 @@ class CheckingAccountService {
     }
 
     makeDiscount(discount) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/payment-discount-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/payment-discount-api',
             {
                 checkingAccountUUID: discount.uuid,
                 paymentAmount: discount.paymentAmount,
@@ -72,7 +72,7 @@ class CheckingAccountService {
             uuid: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + '/car-service/payment-account-api/',
+        return axios.get(process.env.VUE_APP_API_URL + '/car-service/payment-account-api',
 
 
             {
@@ -95,7 +95,7 @@ class CheckingAccountService {
             uuid: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-payment-movement-pdf-api/`,
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-payment-movement-pdf-api`,
         {
             responseType: 'arraybuffer',
             headers: authHeader(),
