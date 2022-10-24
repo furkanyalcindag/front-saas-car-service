@@ -7,7 +7,7 @@ class ProductService {
 
     getProducts() {
 
-        return axios.get(API_URL + '/car-service/product-api/', {headers: authHeader()})
+        return axios.get(API_URL + '/car-service/product-api', {headers: authHeader()})
 
 
     }
@@ -29,7 +29,7 @@ class ProductService {
      */
 
     addProduct(product) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/product-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/product-api',
             {
                 barcodeNumber: product.barcodeNumber,
                 name: product.name,
@@ -55,7 +55,7 @@ class ProductService {
     }
 
     updateProduct(product) {
-        return axios.put(process.env.VUE_APP_API_URL + '/car-service/product-api/',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/product-api',
             {
                 barcodeNumber: product.barcodeNumber,
                 name: product.name,
@@ -88,7 +88,7 @@ class ProductService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-product-search-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-product-search-api`, {
             headers: authHeader(),
             params
         })
@@ -103,7 +103,7 @@ class ProductService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/product-single-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/product-single-api`, {
             headers: authHeader(),
             params
         })
@@ -117,7 +117,7 @@ class ProductService {
             id: id
 
         };
-        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/product-api/`, {
+        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/product-api`, {
             headers: authHeader(),
             params
         }).then(response => {

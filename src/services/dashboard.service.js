@@ -4,7 +4,7 @@ import authHeader from "@/services/auth-header";
 class DashboardService {
     getAdminDashboard() {
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-admin-dashboard-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-admin-dashboard-api`, {headers: authHeader()})
             .then(response => {
             return response;
         }).catch((err) => {
@@ -21,7 +21,7 @@ class DashboardService {
     }
     getServicemanDashboard() {
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-serviceman-dashboard-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-serviceman-dashboard-api`, {headers: authHeader()})
             .then(response => {
             return response;
         }).catch((err) => {
@@ -38,7 +38,7 @@ class DashboardService {
     }
     getCustomerDashboard() {
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-customer-dashboard-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-customer-dashboard-api`, {headers: authHeader()})
             .then(response => {
             return response;
         }).catch((err) => {

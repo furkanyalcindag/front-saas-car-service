@@ -389,7 +389,7 @@ export default {
       // let pageNumber = page;
 
 
-      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api/", {headers: authHeader()})
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api", {headers: authHeader()})
           .then(res => {
             this.selectCategories = res.data;
 
@@ -663,7 +663,7 @@ export default {
 
   },
   mounted() {
-    this.getSelectCategories()
+    //this.getSelectCategories()
     this.getServicProducts(this.$route.params.serviceId)
     this.getServiceImages(this.$route.params.serviceId)
     this.getServiceDetail(this.$route.params.serviceId)

@@ -38,9 +38,10 @@ export default {
     }
   },
     mounted(){
+    /*
       this.$store.dispatch('getSettings').then(result=>{
         this.settings = result
-    })
+    })*/
   },
 }
 </script>

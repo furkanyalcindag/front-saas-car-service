@@ -6,7 +6,7 @@ import authHeader from "@/services/auth-header";
 class ServiceService {
 
     addService(service) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-api',
             {
                 carUUID: service.carUUID,
                 serviceType: service.serviceType,
@@ -15,8 +15,6 @@ class ServiceService {
                 responsiblePerson: service.responsiblePerson,
                 serviceman: service.serviceman,
                 camera:service.camera
-
-
             }, {headers: authHeader()}).then(response => {
 
 
@@ -30,13 +28,13 @@ class ServiceService {
 
 
     getServices() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/service-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/service-api`, {headers: authHeader()})
 
 
     }
 
     getServiceType() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/service-type-select-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/service-type-select-api`, {headers: authHeader()})
 
 
     }
@@ -46,7 +44,7 @@ class ServiceService {
             uuid: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-camera-api/`, {headers: authHeader(),
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-camera-api`, {headers: authHeader(),
         params})
 
 
@@ -58,7 +56,7 @@ class ServiceService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-car-services-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-car-services-api`, {
             headers: authHeader(),
             params
         })
@@ -76,7 +74,7 @@ class ServiceService {
             plate:x
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api/`, {headers: authHeader(),params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api`, {headers: authHeader(),params})
 
 
     }
@@ -86,7 +84,7 @@ class ServiceService {
             id: id
 
         };
-        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/service-api/`, {
+        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/service-api`, {
             headers: authHeader(),
             params
         }).then(response => {
@@ -103,7 +101,7 @@ class ServiceService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-detail-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-detail-api`, {
             headers: authHeader(),
             params
         })
@@ -112,7 +110,7 @@ class ServiceService {
     }
 
     addServiceDetermination(uuid, photos, products, determination, laborPrice, laborTaxRate, laborName) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-determination-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-determination-api',
             {
                 uuid: uuid,
                 photos: photos,
@@ -140,7 +138,7 @@ class ServiceService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-products-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-products-api`, {
             headers: authHeader(),
             params
         })
@@ -155,7 +153,7 @@ class ServiceService {
 
         };
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-images-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-images-api`, {
             headers: authHeader(),
             params
         })
@@ -168,7 +166,7 @@ class ServiceService {
             uuid: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-pdf-api/`,
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-pdf-api`,
         {
             responseType: 'arraybuffer',
             headers: authHeader(),
@@ -186,7 +184,7 @@ class ServiceService {
     }
 
     acceptService(uuid, isAccept) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-approve-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-approve-api',
             {
                 uuid: uuid,
                 isAccept: isAccept,
@@ -210,7 +208,7 @@ class ServiceService {
     }
 
     getServiceCameraSelect() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/camera-select-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/camera-select-api`, {headers: authHeader()})
 
 
     }
@@ -218,7 +216,7 @@ class ServiceService {
     ServiceProcessing(uuid, situationNo, receiverPerson) {
         if (situationNo === 3) {
 
-            return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-processing-api/',
+            return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-processing-api',
                 {
                     uuid: uuid,
                     situationNo: situationNo,
@@ -235,7 +233,7 @@ class ServiceService {
 
 
         } else {
-            return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-processing-api/',
+            return axios.post(process.env.VUE_APP_API_URL + '/car-service/service-processing-api',
                 {
                     uuid: uuid,
                     situationNo: situationNo,

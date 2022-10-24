@@ -886,7 +886,7 @@ export default {
       // let pageNumber = page;
 
 
-      axios.get(process.env.VUE_APP_API_URL + "/car-service/brand-select-api/", {headers: authHeader()})
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/brand-select-api", {headers: authHeader()})
           .then(res => {
             this.selectBrands = res.data;
 

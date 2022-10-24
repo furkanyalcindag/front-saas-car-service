@@ -87,6 +87,21 @@ const CheckingAccountList = () => import('@/views/checkingAccount/CheckingAccoun
 
 const CheckingAccountByCustomerList = () => import('@/views/checkingAccount/CheckingAccounByCustomerList')
 
+
+
+
+const ManagementOrganization = () => import('@/views/management/Organization')
+
+const ManagementDashboard = () => import('@/views/management/Dashboard')
+
+const ManagementPlan = () => import('@/views/management/Plan')
+
+const ManagementUser = () => import('@/views/management/User')
+
+const ManagementOrganizationPlan = () => import('@/views/management/OrganizationPlan')
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -99,7 +114,8 @@ export default new Router({
 function configRoutes() {
     const user_group = UserService.getUserGroup()
     const groups = {
-        admin:"Admin",
+        systemAdmin:"SystemAdmin",
+        admin:"Owner",
         serviceman:"Tamirci",
         customer:"Customer",
         accountant:"Muhasebe"
@@ -272,6 +288,45 @@ function configRoutes() {
                             name: 'Staff',
                             component: Staff
                         }
+
+                    ]
+                },
+                {
+                    path: '/management',
+                    redirect: '/management/dashboard',
+                    name: 'Management',
+                    component: {
+                        render(c) {
+                            return c('router-view')
+                        }
+                    },
+                    children: [
+                        {
+                            path: 'dashboard',
+                            name: 'ManagementDashboard',
+                            component: ManagementDashboard
+                        },
+                        {
+                            path: 'plan',
+                            name: 'ManagementPlan',
+                            component: ManagementPlan
+                        },
+                        {
+                            path: 'organization',
+                            name: 'ManagementOrganization',
+                            component: ManagementOrganization
+                        },
+                        {
+                            path: 'user',
+                            name: 'ManagementUser',
+                            component: ManagementUser
+                        },
+                        {
+                            path: 'organization-plan/:organizationId',
+                            name: 'ManagementOrganizationPlan',
+                            component: ManagementOrganizationPlan
+                        },
+
 
                     ]
                 },

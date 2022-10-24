@@ -35,7 +35,7 @@ class AuthService {
 
     getUserInfo() {
 
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/user-payload-api/`, {
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/user-payload-api`, {
             headers: authHeader()
 
         })}

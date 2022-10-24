@@ -5,7 +5,7 @@ import authHeader from "@/services/auth-header";
 class BrandService {
 
     addBrand(brand) {
-        return axios.post(process.env.VUE_APP_API_URL + '/car-service/brand-api/',
+        return axios.post(process.env.VUE_APP_API_URL + '/car-service/brand-api',
             {
                 name: brand.name,
 
@@ -21,7 +21,7 @@ class BrandService {
     }
 
     getBrands() {
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/brand-api/`, {headers: authHeader()})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/brand-api`, {headers: authHeader()})
 
 
     }
@@ -31,7 +31,7 @@ class BrandService {
             id: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/brand-api/`, {headers: authHeader(), params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/brand-api`, {headers: authHeader(), params})
 
 
     }
@@ -42,7 +42,7 @@ class BrandService {
             id: id
 
         };
-        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/brand-api/`, {headers: authHeader(), params}).then(response => {
+        return axios.delete(process.env.VUE_APP_API_URL + `/car-service/brand-api`, {headers: authHeader(), params}).then(response => {
             return response;
         }).catch(error => {
             return error;
@@ -59,7 +59,7 @@ class BrandService {
         };
 
 
-        return axios.put(process.env.VUE_APP_API_URL + '/car-service/brand-api/',
+        return axios.put(process.env.VUE_APP_API_URL + '/car-service/brand-api',
             {
 
                 name: brand.name

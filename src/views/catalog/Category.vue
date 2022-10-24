@@ -530,7 +530,7 @@ export default {
       //let pageNumber = page;
 
 
-      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-api/", {headers: authHeader()})
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-api", {headers: authHeader()})
           .then(res => {
             this.categories = res.data;
             this.total = res.data.recordsTotal;
@@ -552,7 +552,7 @@ export default {
       // let pageNumber = page;
 
 
-      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api/", {headers: authHeader()})
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api", {headers: authHeader()})
           .then(res => {
             this.selectCategories = res.data;
 
