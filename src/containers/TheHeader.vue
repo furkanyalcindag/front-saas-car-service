@@ -22,6 +22,7 @@
      
     </CHeaderNav>
     <CHeaderNav class="mr-4">
+      <TheHeaderDropdownBranch/>
       <TheHeaderDropdownAccnt/>
       <CHeaderNavItem class="d-md-down-none mx-2">
         <CButton  @click="logout"> 
@@ -38,11 +39,13 @@
 
 <script>
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
+import TheHeaderDropdownBranch from "@/containers/TheHeaderDropdownBranch";
 
 export default {
   name: 'TheHeader',
   components: {
-    TheHeaderDropdownAccnt
+    TheHeaderDropdownAccnt,
+    TheHeaderDropdownBranch
   },
   methods: {
     logout(){

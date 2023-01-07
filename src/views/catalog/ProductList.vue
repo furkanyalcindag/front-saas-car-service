@@ -20,20 +20,52 @@
             </CCardHeader>
             <template>
               <CCardBody>
-<!--                <div>-->
-<!--                  <CAlert color="success" :show="isSuccess">-->
-<!--                    Ürün başarıyla kaydedildi.-->
-<!--                  </CAlert>-->
+                <!--                <div>-->
+                <!--                  <CAlert color="success" :show="isSuccess">-->
+                <!--                    Ürün başarıyla kaydedildi.-->
+                <!--                  </CAlert>-->
 
-<!--                </div>-->
+                <!--                </div>-->
+
+                <CRow>
+
+                  <!--                  <CAlert color="success" :show="isSuccess">-->
+                  <!--                    Servis Durumu Başarıyla Değiştirildi-->
+                  <!--                  </CAlert>-->
+
+                  <CCol lg="3" style="float: right">
+
+
+                    <CInput
+
+                        description=""
+                        autocomplete="autocomplete"
+                        placeholder="Ürün Kodu"
+                        v-model="barcode"
+
+
+                    />
+
+                  </CCol>
+
+                  <CCol lg="3">
+
+
+                    <CButton @click="getProducts" color="success">Ara</CButton>
+
+                  </CCol>
+
+
+                </CRow>
+
 
                 <CDataTable
                     :items="computedItemsProduct"
                     :fields="fieldsTableProduct"
-                    column-filter
+
                     :border="true"
-                    :items-per-page="20"
-                    :activePage="4"
+                    :loading="loading"
+
                     hover
                     sorter
                     pagination
@@ -53,7 +85,8 @@
 
                       <CButtonGroup class="mx-1 d-sm-down-none">
                         <CButton v-if="deleteButton" color="danger" @click="setDeleteModal(item.uuid)">Sil</CButton>
-                        <CButton color="warning" @click="getSingleProduct(item.uuid)">Güncelle</CButton>
+                        <CButton color="warning btn-sm" @click="getSingleProduct(item.uuid)">Güncelle</CButton>
+                        <CButton color="info btn-sm outline" @click="showStockModal(item.uuid)">Stok Kontrol</CButton>
                       </CButtonGroup>
 
 
@@ -68,6 +101,18 @@
                     </CCollapse>
                   </template>
                 </CDataTable>
+
+                <template>
+                  <div>
+
+                    <CPagination
+                        :activePage.sync="page"
+                        :pages="pageCount"
+                        size="sm"
+                        align="end"
+                    />
+                  </div>
+                </template>
 
 
               </CCardBody>
@@ -92,20 +137,20 @@
             <CCard v-if="showAddProduct">
               <template>
                 <CCardBody>
-<!--                  <div>-->
-<!--                    <CAlert color="success" :show="isSuccessCar">-->
-<!--                      Ürün başarıyla kaydedildi.-->
-<!--                    </CAlert>-->
+                  <!--                  <div>-->
+                  <!--                    <CAlert color="success" :show="isSuccessCar">-->
+                  <!--                      Ürün başarıyla kaydedildi.-->
+                  <!--                    </CAlert>-->
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errorsCar"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errorsCar"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
 
 
                   <CRow>
@@ -240,20 +285,20 @@
             <CCard v-if="showUpdateProduct">
               <template>
                 <CCardBody>
-<!--                  <div>-->
-<!--                    <CAlert color="success" :show="isSuccessCar">-->
-<!--                      Ürün başarıyla kaydedildi.-->
-<!--                    </CAlert>-->
+                  <!--                  <div>-->
+                  <!--                    <CAlert color="success" :show="isSuccessCar">-->
+                  <!--                      Ürün başarıyla kaydedildi.-->
+                  <!--                    </CAlert>-->
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errorsCar"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errorsCar"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
 
 
                   <CRow>
@@ -397,6 +442,58 @@
     </CModal>
 
 
+    <CModal
+        :show.sync="showProductStock"
+        :no-close-on-backdrop="true"
+        :centered="true"
+        title="Modal title 2"
+        size="m"
+        color="dark"
+    >
+      <CRow>
+        <CCol lg="12">
+          <transition name="fade">
+            <CCard v-if="showProductStock">
+              <template>
+                <CCardBody>
+
+
+                  <CRow>
+
+
+                    <CListGroup style="width: 100%">
+
+                      <CListGroupItem  v-for="(item, index) in stocks" :key="item.uuid">
+                        {{ item.branchName }}
+
+                        <CButton v-if="item.quantity>0" color="primary" style="float: right">{{ item.quantity }}
+                        </CButton>
+                        <CButton v-else color="danger" style="float: right">{{ item.quantity }}</CButton>
+
+                      </CListGroupItem>
+
+                    </CListGroup>
+
+                  </CRow>
+
+
+                </CCardBody>
+              </template>
+
+            </CCard>
+          </transition>
+        </CCol>
+      </CRow>
+      <template #header>
+        <h6 class="modal-title">Ürün Stok Bilgisi</h6>
+        <CButtonClose @click="showProductStock = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="showProductStock = false" color="danger">Kapat</CButton>
+      </template>
+    </CModal>
+
+
   </div>
 </template>
 
@@ -436,8 +533,11 @@ export default {
         {key: "totalProduct", label: "Toplam Fiyat"},
         {key: "actions", label: "İşlemler"}
       ],
+      showProductStock: false,
+      pageCount: 0,
       pageLabel: {label: 'sasasa', external: true,},
       page: 1,
+      barcode: '',
       numberOfPages: 0,
       selected: [],
       rowsPerPageItems: [5],
@@ -499,7 +599,8 @@ export default {
       ],
       showAddProduct: false,
       showUpdateProduct: false,
-      deleteButton:false
+      deleteButton: false,
+      stocks: []
     };
   },
 
@@ -521,8 +622,8 @@ export default {
           "primary";
       }
     },
-    groupControl(){
-      if(localStorage.getItem("user_group")==="Admin"){
+    groupControl() {
+      if (localStorage.getItem("user_group") === "Admin") {
         this.deleteButton = true
       }
     },
@@ -569,8 +670,8 @@ export default {
         this.successHide();
         await this.getProducts();
         this.$toast.success({
-          title:'Bilgi',
-          message:'Ürün başarıyla silindi'
+          title: 'Bilgi',
+          message: 'Ürün başarıyla silindi'
         })
 
 
@@ -579,10 +680,10 @@ export default {
         this.isError = true;
         let x = [{'1': 'Bu ürün, kaydedilen bir ürünle ilişkili olduğu için silinemez'}]
         this.errors = x;
-        this.errors.forEach((mess)=>{
+        this.errors.forEach((mess) => {
           this.$toast.error({
-            title:'Uyarı',
-            message:mess[1]
+            title: 'Uyarı',
+            message: mess[1]
           })
         })
         this.errorHide();
@@ -590,8 +691,8 @@ export default {
         this.isError = false;
         this.isError = true;
         this.$toast.error({
-          title:'Uyarı',
-          message:'Lütfen daha sonra tekrar deneyiniz'
+          title: 'Uyarı',
+          message: 'Lütfen daha sonra tekrar deneyiniz'
         })
         this.errorHide();
         await this.$router.push("/pages/login");
@@ -600,8 +701,8 @@ export default {
         this.isError = true;
         this.errors = a.data;
         this.$toast.error({
-          title:'Uyarı',
-          message:'Lütfen daha sonra tekrar deneyiniz'
+          title: 'Uyarı',
+          message: 'Lütfen daha sonra tekrar deneyiniz'
         })
         this.errorHide();
       }
@@ -621,27 +722,27 @@ export default {
         this.getProducts();
         this.product = new Product()
         this.$toast.success({
-          title:'Bilgi',
-          message:'Ürün başarıyla eklendi'
+          title: 'Bilgi',
+          message: 'Ürün başarıyla eklendi'
         })
       } else if (productResponse.status === 401) {
         // this.isError = false;
         // this.isError = true;
         this.errorHide();
         this.$toast.error({
-          title:'Uyarı',
-          message:'Lütfen daha sonra tekrar deneyiniz'
+          title: 'Uyarı',
+          message: 'Lütfen daha sonra tekrar deneyiniz'
         })
         await this.$router.push("/pages/login");
       } else {
         // this.isError = false;
         // this.isError = true;
         this.errorsCar = productResponse.response.data;
-        for (const [key,value] of Object.entries(this.errorsCar)){
+        for (const [key, value] of Object.entries(this.errorsCar)) {
           this.$toast.error({
-          title:'Uyarı',
-          message:`${key}: ${value}`
-        })
+            title: 'Uyarı',
+            message: `${key}: ${value}`
+          })
         }
 
         this.errorHide();
@@ -673,19 +774,19 @@ export default {
         this.isError = true;
         this.errorHide();
         this.$toast.error({
-          title:'Uyarı',
-          message:'Lütfen daha sonra tekrar deneyiniz'
+          title: 'Uyarı',
+          message: 'Lütfen daha sonra tekrar deneyiniz'
         })
         await this.$router.push("/pages/login");
       } else {
         this.isError = false;
         this.isError = true;
         this.errorsCar = productResponse.response.data;
-        for (const [key,value] of Object.entries(this.errorsCar)){
+        for (const [key, value] of Object.entries(this.errorsCar)) {
           this.$toast.error({
-          title:'Uyarı',
-          message:`${key}: ${value}`
-        })
+            title: 'Uyarı',
+            message: `${key}: ${value}`
+          })
         }
         this.errorHide();
       }
@@ -733,6 +834,17 @@ export default {
 
     },
 
+
+    showStockModal(product_id) {
+
+
+      this.showProductStock = true
+      this.getProductStockQuantity(product_id)
+
+
+    },
+
+
     addProductModal() {
 
       this.showAddProduct = true
@@ -751,10 +863,7 @@ export default {
     successHideCar() {
       setTimeout(() => (this.isSuccessCar = false), 5000);
     },
-    async getCustomers() {
-      let customersRes = await new CustomerService().customerGet('', '', '');
-      this.customers = customersRes;
-    },
+
 
     getProducts() {
 
@@ -762,100 +871,143 @@ export default {
       this.loading = true;
       //const {page, itemsPerPage} = this.options;
       //let pageNumber = page;
+      var x = '';
+      if (this.barcode != null) {
+        x = this.barcode;
+      }
 
 
-      axios.get(process.env.VUE_APP_API_URL + "/car-service/product-api", {headers: authHeader()})
+      const params = {
+        activePage: this.page,
+        barcode: x
+
+      };
+
+
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/product-api", {headers: authHeader(), params})
           .then(res => {
-            this.products = res.data;
-            this.total = res.data.recordsTotal;
-            this.numberOfPages = 2;
+            this.products = res.data.data;
+            this.pageCount = res.data.activePage
+
 
           })
           .catch(err => {
-            this.$router.push("/pages/login");
+            if (err.response.status === 401) {
+              localStorage.clear()
+              this.$router.push("/pages/login");
+            }
+
+            this.$toast.error(
+                'Lütfen daha sonra tekrar deneyiniz'
+            )
+
+
           }).finally(() => this.loading = false);
       this.loading = false
     },
 
 
-  getSelectCategories() {
+    getSelectCategories() {
 
-    // get by search keyword
+      // get by search keyword
 
-    this.loading = true;
-    //const {page, itemsPerPage} = this.options;
-    // let pageNumber = page;
-
-
-    axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api", {headers: authHeader()})
-        .then(res => {
-          this.selectCategories = res.data;
+      this.loading = true;
+      //const {page, itemsPerPage} = this.options;
+      // let pageNumber = page;
 
 
-        })
-        .catch(err => console.log(err.response.data))
-        .finally(() => this.loading = false);
-    this.loading = false
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/category-select-api", {headers: authHeader()})
+          .then(res => {
+            this.selectCategories = res.data;
+
+
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => this.loading = false);
+      this.loading = false
+    },
+
+    getProductStockQuantity(id) {
+
+      // get by search keyword
+
+      this.loading = true;
+      //const {page, itemsPerPage} = this.options;
+      // let pageNumber = page;
+
+
+      const params = {
+
+        id: id
+
+      };
+
+
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/product-branch-stock-api", {headers: authHeader(),params})
+          .then(res => {
+            this.stocks = res.data;
+
+
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => this.loading = false);
+      this.loading = false
+    },
+
+    getSelectBrands() {
+
+      // get by search keyword
+
+      this.loading = true;
+      //const {page, itemsPerPage} = this.options;
+      // let pageNumber = page;
+
+
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/brand-select-api", {headers: authHeader()})
+          .then(res => {
+            this.selectBrands = res.data;
+
+
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => this.loading = false);
+      this.loading = false
+    },
+
+
   },
 
-  getSelectBrands() {
+  watch: {}
+  ,
 
-    // get by search keyword
-
-    this.loading = true;
-    //const {page, itemsPerPage} = this.options;
-    // let pageNumber = page;
+  created() {
 
 
-    axios.get(process.env.VUE_APP_API_URL + "/car-service/brand-select-api", {headers: authHeader()})
-        .then(res => {
-          this.selectBrands = res.data;
-
-
-        })
-        .catch(err => console.log(err.response.data))
-        .finally(() => this.loading = false);
-    this.loading = false
-  },
-
-
-},
-
-watch: {
-}
-,
-
-created()
-{
-
-
-}
-,
-async mounted()
-{
-  this.groupControl()
-  await this.getProducts();
-  await this.getSelectCategories();
-  await this.getSelectBrands()
-
-}
-,
-computed: {
-
-  computedItemsProduct()
-  {
-
-    return this.products.map(item => {
-      return {
-        ...item,
-
-        brandName: item.brand != null ? item.brand.name : "",
-
-
-      }
-    })
   }
-}
+  ,
+  async mounted() {
+    this.groupControl()
+    await this.getProducts();
+    await this.getSelectCategories();
+    await this.getSelectBrands()
+
+  }
+  ,
+  computed: {
+
+    computedItemsProduct() {
+
+      return this.products.map(item => {
+        return {
+          ...item,
+
+          brandName: item.brand != null ? item.brand.name : "",
+
+
+        }
+      })
+    }
+  }
 
 }
 ;

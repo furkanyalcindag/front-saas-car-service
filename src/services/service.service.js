@@ -2,7 +2,6 @@ import axios from "axios";
 import authHeader from "@/services/auth-header";
 
 
-
 class ServiceService {
 
     addService(service) {
@@ -14,7 +13,7 @@ class ServiceService {
                 complaint: service.complaint,
                 responsiblePerson: service.responsiblePerson,
                 serviceman: service.serviceman,
-                camera:service.camera
+                camera: service.camera
             }, {headers: authHeader()}).then(response => {
 
 
@@ -44,8 +43,10 @@ class ServiceService {
             uuid: id
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-camera-api`, {headers: authHeader(),
-        params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-camera-api`, {
+            headers: authHeader(),
+            params
+        })
 
 
     }
@@ -64,17 +65,17 @@ class ServiceService {
 
     }
 
-    getServicesList(activePage,plate) {
+    getServicesList(activePage, plate) {
         var x = plate
-        if(plate ==null){
-            x=''
+        if (plate == null) {
+            x = ''
         }
         const params = {
             activePage: activePage,
-            plate:x
+            plate: x
 
         };
-        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api`, {headers: authHeader(),params})
+        return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-services-api`, {headers: authHeader(), params})
 
 
     }
@@ -167,11 +168,11 @@ class ServiceService {
 
         };
         return axios.get(process.env.VUE_APP_API_URL + `/car-service/get-service-pdf-api`,
-        {
-            responseType: 'arraybuffer',
-            headers: authHeader(),
-            params
-        }).then((response) => {
+            {
+                responseType: 'arraybuffer',
+                headers: authHeader(),
+                params
+            }).then((response) => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
@@ -179,6 +180,15 @@ class ServiceService {
             document.body.appendChild(link);
             link.click();
         })
+            .catch((err) => {
+                if (err.response) {
+                    return err.response
+                } else if (err.request) {
+                    // client never received a response, or request never left
+                } else {
+                    // anything else
+                }
+            });
 
 
     }

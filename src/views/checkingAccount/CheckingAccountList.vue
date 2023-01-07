@@ -16,23 +16,67 @@
             </CCardHeader>
             <template>
               <CCardBody>
-<!--                <div>-->
-<!--                  <CAlert color="success" :show="isSuccess">-->
-<!--                    Servis Durumu Başarıyla Değiştirildi-->
-<!--                  </CAlert>-->
+                <!--                <div>-->
+                <!--                  <CAlert color="success" :show="isSuccess">-->
+                <!--                    Servis Durumu Başarıyla Değiştirildi-->
+                <!--                  </CAlert>-->
 
-<!--                </div>-->
+                <!--                </div>-->
+
+                <CRow>
+
+                  <!--                  <CAlert color="success" :show="isSuccess">-->
+                  <!--                    Servis Durumu Başarıyla Değiştirildi-->
+                  <!--                  </CAlert>-->
+
+                  <CCol lg="4" style="float: right">
+
+
+                    <CInput
+
+                        description=""
+                        autocomplete="autocomplete"
+                        placeholder="Plaka"
+                        v-model="plateFilter"
+
+
+                    />
+
+                  </CCol>
+                  <CCol lg="4" style="float: right">
+
+
+                    <CInput
+
+                        description=""
+                        autocomplete="autocomplete"
+                        placeholder="Müşteri"
+                        v-model="customerFilter"
+
+
+                    />
+
+                  </CCol>
+
+                  <CCol lg="3">
+
+
+                    <CButton @click="getCheckingAccountList" color="success">Ara</CButton>
+
+                  </CCol>
+
+
+                </CRow>
 
                 <CDataTable
                     :items="computedItems"
                     :fields="fieldsTable"
-                    column-filter
+                    :striped="true"
                     :border="true"
-                    :items-per-page="10"
-                    :activePage="4"
+                    :loading="load"
                     hover
                     sorter
-                    pagination
+
                     :noItemsView="{ noResults: 'Veri bulunamadı', noItems: 'Veri bulunamadı' }"
                     clickableRows
 
@@ -78,6 +122,21 @@
                     </CCollapse>
                   </template>
                 </CDataTable>
+
+                <template>
+                  <div>
+
+                    Toplam {{ filteredCount }} Kayıt
+
+                    <CPagination
+                        :activePage.sync="page"
+                        :pages="pageCount"
+
+                        size="sm"
+                        align="end"
+                    />
+                  </div>
+                </template>
 
 
               </CCardBody>
@@ -153,18 +212,18 @@
             <CCard v-if="showMakePayment">
               <template>
                 <CCardBody>
-<!--                  <div>-->
+                  <!--                  <div>-->
 
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errors"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errors"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
                   <CRow>
                     <CCol lg="12">
                       <CInput
@@ -234,7 +293,7 @@
                       :fields="fieldsTablePayment"
                       column-filter
 
-
+                      :loading="load"
                       :items-per-page="5"
                       :activePage="4"
                       hover
@@ -262,7 +321,7 @@
         <CButtonClose @click="paymentsModal = false" class="text-white"/>
       </template>
       <template #footer>
-         <CButton @click="getPaymentMovementPdf" color="primary" class="float-right">Ekstre</CButton>
+        <CButton @click="getPaymentMovementPdf" color="primary" class="float-right">Ekstre</CButton>
         <CButton @click="paymentsModal = false" color="danger">Kapat</CButton>
 
       </template>
@@ -285,18 +344,18 @@
             <CCard v-if="discountModal">
               <template>
                 <CCardBody>
-<!--                  <div>-->
+                  <!--                  <div>-->
 
 
-<!--                    <CAlert-->
-<!--                        v-for="(value,key) in errors"-->
-<!--                        :key="value.message"-->
-<!--                        color="danger"-->
-<!--                        :show="isError"-->
-<!--                    >-->
-<!--                      {{ key }}: {{ value[0] }}-->
-<!--                    </CAlert>-->
-<!--                  </div>-->
+                  <!--                    <CAlert-->
+                  <!--                        v-for="(value,key) in errors"-->
+                  <!--                        :key="value.message"-->
+                  <!--                        color="danger"-->
+                  <!--                        :show="isError"-->
+                  <!--                    >-->
+                  <!--                      {{ key }}: {{ value[0] }}-->
+                  <!--                    </CAlert>-->
+                  <!--                  </div>-->
                   <CRow>
                     <CCol lg="12">
                       <CInput
@@ -361,11 +420,11 @@ export default {
     return {
 
       fieldsTable: [
-        {key: "serviceNo", label: "Servis Numarası"},
+        {key: "serviceNo", label: "Servis No", _style: "width:20px"},
         {key: 'customerName', label: "Müşteri", _style: "min-width:200px"},
         {key: "plate", label: "Plaka"},
 
-        {key: "serviceDate", label: "Servis Tarihi"},
+        {key: "serviceDate", label: "Servis Tarihi", _style: "min-width:200px;"},
         {key: "netPrice", label: "Net Ücret"},
         {key: "taxPrice", label: "KDV"},
         {key: "totalPrice", label: "Toplam Ücret"},
@@ -381,6 +440,7 @@ export default {
 
       ],
       pageLabel: {label: 'sasasa', external: true,},
+      pageCount: 0,
       page: 1,
       numberOfPages: 0,
       selected: [],
@@ -415,6 +475,7 @@ export default {
       show: true,
       showAddCar: true,
       horizontal: {label: "col-3", input: "col-9"},
+      load: false,
 
       selectOptions: [
         "Option 1",
@@ -450,7 +511,11 @@ export default {
       paymentMovements: [],
       paymentsModal: false,
       discountModal: false,
-      checkingAccountUUID:''
+      checkingAccountUUID: '',
+      plateFilter: '',
+      customerFilter: '',
+      totalCount: 0,
+      filteredCount: 0
     };
   },
 
@@ -475,7 +540,13 @@ export default {
 
 
     async getPaymentMovementPdf() {
+      this.load = true
+      this.$toast.info(
+          'Ekstre hazırlanıyor. Lütfen bekleyiniz.')
       let response = await new CheckingAccountService().getPaymentMovementPdf(this.checkingAccountUUID);
+      this.load = false
+      this.$toast.success('Ekstre başarıyla indirildi.'
+      )
     },
 
 
@@ -486,7 +557,6 @@ export default {
         this.collapseDuration = 0;
       });
     },
-
 
 
     async getServiceList() {
@@ -500,15 +570,20 @@ export default {
 
     async getCheckingAccountList() {
 
-      let response = await new CheckingAccountService().checkingAccountList();
+      this.load = true
+
+      let response = await new CheckingAccountService().checkingAccountList(this.plateFilter, this.customerFilter);
 
       this.checkingAccounts = response.data.data
+      this.pageCount = Math.ceil(response.data.recordsFiltered / 10);
+      this.filteredCount = response.data.recordsFiltered
+      this.load = false
 
     },
 
     async getPaymentMovementsList(id) {
 
-      this.checkingAccountUUID=id
+      this.checkingAccountUUID = id
       let response = await new CheckingAccountService().getPaymentMovement(id);
 
       this.paymentMovements = response.data
@@ -637,7 +712,6 @@ export default {
         })
 
 
-
       } else if (a.response.status === 401) {
         this.isError = false;
         this.isError = true;
@@ -681,11 +755,11 @@ export default {
         this.isError = false;
         this.isError = true;
         this.errors = a.response.data;
-        for (const [key, value] of Object.entries(this.errors)){
+        for (const [key, value] of Object.entries(this.errors)) {
           this.$toast.error({
-          title:'Hata',
-          message:`${key}: ${value}`
-        })
+            title: 'Hata',
+            message: `${key}: ${value}`
+          })
         }
         this.errorHide();
       }

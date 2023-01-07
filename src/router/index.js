@@ -6,6 +6,7 @@ import Staff from "@/views/staff/Staff";
 import UserService from "../services/UserService"
 
 
+
 // Containers
 const TheContainer = () => import('@/containers/TheContainer')
 
@@ -88,8 +89,6 @@ const CheckingAccountList = () => import('@/views/checkingAccount/CheckingAccoun
 const CheckingAccountByCustomerList = () => import('@/views/checkingAccount/CheckingAccounByCustomerList')
 
 
-
-
 const ManagementOrganization = () => import('@/views/management/Organization')
 
 const ManagementDashboard = () => import('@/views/management/Dashboard')
@@ -100,7 +99,7 @@ const ManagementUser = () => import('@/views/management/User')
 
 const ManagementOrganizationPlan = () => import('@/views/management/OrganizationPlan')
 
-
+const Branch = () => import('@/views/branch/Branch')
 
 Vue.use(Router)
 
@@ -114,11 +113,11 @@ export default new Router({
 function configRoutes() {
     const user_group = UserService.getUserGroup()
     const groups = {
-        systemAdmin:"SystemAdmin",
-        admin:"Owner",
-        serviceman:"Tamirci",
-        customer:"Customer",
-        accountant:"Muhasebe"
+        systemAdmin: "SystemAdmin",
+        admin: "Owner",
+        serviceman: "Tamirci",
+        customer: "Customer",
+        accountant: "Muhasebe"
     }
 
     var dashboard_link = ""
@@ -135,7 +134,7 @@ function configRoutes() {
         case groups.accountant:
             dashboard_link = "/accountant-dashboard"
             break;
-        
+
         default:
             dashboard_link = "/pages/login"
             break;
@@ -143,7 +142,7 @@ function configRoutes() {
     return [
         {
             path: '/',
-            redirect:`${dashboard_link}`,
+            redirect: `${dashboard_link}`,
             name: 'Home',
             component: TheContainer,
             children: [
@@ -291,6 +290,27 @@ function configRoutes() {
 
                     ]
                 },
+
+                {
+                    path: '/branch',
+                    redirect: '/branch/branch',
+                    name: 'Branch',
+                    component: {
+                        render(c) {
+                            return c('router-view')
+                        }
+                    },
+                    children: [
+                        {
+                            path: 'branch-operations',
+                            name: 'Branch',
+                            component: Branch
+                        },
+
+
+                    ]
+                },
+
                 {
                     path: '/management',
                     redirect: '/management/dashboard',

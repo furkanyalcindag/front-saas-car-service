@@ -82,6 +82,14 @@
 
                     />
 
+                    <CSelect
+                        :options="selectBranches"
+                        label="Şube (Zorunlu Alan)"
+                        v-model="staff.branch"
+                        :value.sync="staff.branch"
+
+                    />
+
                     <CTextarea
                         :rows="3"
                         label="Adres"
@@ -259,6 +267,13 @@
                           :value.sync="staffUpdate.group"
 
                       />
+                      <CSelect
+                          :options="selectBranches"
+                          label="Grup (Zorunlu Alan)"
+                          v-model="staffUpdate.branch"
+                          :value.sync="staffUpdate.branch"
+
+                      />
 
                       <CTextarea
                           :rows="3"
@@ -315,9 +330,10 @@ export default {
   data() {
     return {
       fieldsTable: [
-        {key: 'nameSurname', label: "Ad Soyad", _style: "min-width:200px"},
-        {key: "userUsername", label: "Email"},
-        {key: "userGroup", label: "Personel Grubu"},
+        {key: 'name', label: "Ad Soyad", _style: "min-width:200px"},
+        {key: "email", label: "Email"},
+        {key: "branch", label: "Şube"},
+        {key: "group", label: "Personel Grubu"},
         {key: "actions", label: "İşlemler"},
       ],
 
@@ -333,10 +349,8 @@ export default {
       customers: [],
       cars: [],
       staffs: [],
-      staff: new Staff("", "", "", "", "", ""),
-      staffUpdate: new Customer("", "", "", "", "", "", "", ""),
-      customer: new Customer("", "", "", "", "", "", "", ""),
-      car: new Car("", "", "", "", "", "", "", "", "", "", ""),
+      staff: new Staff("", "", "", "", "", "",""),
+      staffUpdate: new Staff("", "", "", "", "", "", ""),
       isSuccess: false,
       isSuccessCar: false,
       isError: false,
@@ -380,7 +394,8 @@ export default {
         "Inline Radios - custom",
       ],
       deleteModel: false,
-      deleteId: ''
+      deleteId: '',
+      selectBranches: [],
     };
   },
 
@@ -489,16 +504,15 @@ export default {
       this.groups = response.data
     },
     async addStaff() {
+      console.log(this.staff)
       let a = await new StaffService().addStaff(this.staff);
       if (a.status === 200) {
         this.isSuccess = false;
         this.isSuccess = true;
         this.successHide();
         this.getStaffs();
-        this.$toast.success({
-          title: 'Başarılı',
-          message: "Personel başarıyla eklendi"
-        })
+        this.$toast.success("Personel başarıyla eklendi"
+        )
         this.staff.firstName=''
         this.staff.lastName=''
         this.staff.username=''
@@ -509,20 +523,17 @@ export default {
         this.isError = false;
         this.isError = true;
         this.errorHide();
-        this.$toast.error({
-          title: 'Hata',
-          message: "Yetkiniz bulunmamaktadır"
-        })
+        this.$toast.error(
+          "Yetkiniz bulunmamaktadır"
+        )
         await this.$router.push("/pages/login");
       } else {
         this.isError = false;
         this.isError = true;
         this.errors = a.response.data;
         for (const [key, value] of Object.entries(this.errors)){
-          this.$toast.error({
-            title: 'Hata',
-            message: `${key}: ${value}`
-        })
+          this.$toast.error( `${key}: ${value}`
+        )
         }
         this.errorHide();
       }
@@ -554,15 +565,34 @@ export default {
         //   message: a.response.data
         // });
         for (const [key, value] of Object.entries(this.errors)){
-          this.$toast.error({
-            title: 'Hata',
-            message: `${key}: ${value}`
-        })
+          this.$toast.error(`${key}: ${value}`
+        )
         }
 
 
       }
 
+    },
+
+    getSelectBranches() {
+
+      // get by search keyword
+
+      this.loading = true;
+      //const {page, itemsPerPage} = this.options;
+      // let pageNumber = page;
+
+
+      axios.get(process.env.VUE_APP_API_URL + "/car-service/branch-select-api", {headers: authHeader()})
+          .then(res => {
+            this.selectBranches = res.data;
+
+
+
+          })
+          .catch(err => console.log(err.response.data))
+          .finally(() => this.loading = false);
+      this.loading = false
     }
   },
 
@@ -575,6 +605,7 @@ export default {
   mounted() {
     this.getGroups()
     this.getStaffs()
+    this.getSelectBranches()
 
 
   },
@@ -583,10 +614,10 @@ export default {
 
       return this.staffs.map(item => {
         return {
-          ...item,
-          userUsername: item.user.username,
+          ...item
+          /*userUsername: item.user.username,
           nameSurname: item.user.first_name + ' ' + item.user.last_name,
-          userGroup: item.user.groups[0].name
+          userGroup: item.user.groups[0].name*/
 
         }
       })

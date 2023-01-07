@@ -46,6 +46,7 @@
     "vue-lazyload": "^1.3.3",
     "vue-loading-overlay": "^3.4.2",
     "vue-multiselect": "^2.1.6",
+    "vue-progress-path": "0.0.2",
     "vue-router": "~3.3.2",
     "vue-toast-notification": "^0.6.3",
     "vue-upload-multiple-image": "^1.1.6",

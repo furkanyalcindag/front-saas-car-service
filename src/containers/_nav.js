@@ -134,6 +134,20 @@ const services = {
     ]
 }
 
+
+const branch = {
+    _name: 'CSidebarNavDropdown',
+    name: 'Şube',
+    route: '/branch',
+    icon: 'cil-people',
+    items: [
+        {
+            name: 'Şube İşlemleri',
+            to: '/branch/branch-operations'
+        }
+    ]
+}
+
 var items =[]
 items.push(home)
 items.push(actions)
@@ -152,7 +166,8 @@ if(user_group === groups.admin || user_group === groups.serviceman)
 
 if(user_group === groups.admin)
 {
-    items.push(staff)
+    items.push(staff);
+    items.push(branch)
 }
 if(user_group === groups.admin || user_group === groups.serviceman || user_group===groups.customer)
 {

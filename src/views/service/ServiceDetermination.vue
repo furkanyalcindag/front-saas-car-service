@@ -2,6 +2,8 @@
 
   <div>
 
+
+
     <CRow>
 
       <CCol lg="12">
@@ -787,13 +789,15 @@ export default {
 
     async addDetermination() {
 
+      let loader =this.$loading.show();
+
       let response = await new ServiceService().addServiceDetermination(this.$route.params.serviceId, this.imagesPost, this.carts, this.determination, this.laborPrice, this.laborTaxRate, this.laborName);
 
       if (response.status === 200) {
-        this.$toast.success({
-          title:'Bilgi',
-          message:'Servis işlemi başarılı servis listesine yönlendiriliyorsununz'
-        })
+
+        this.$toast.success(
+          'Servis işlemi başarılı servis listesine yönlendiriliyorsununz'
+        )
 
 
         setTimeout(() => this.$router.push({
@@ -801,17 +805,17 @@ export default {
           params: {message: "Arıza tespiti başarıyla yapıldı"}
         }), 3000);
       } else if (response.response.status === 502) {
-        console.log("dnmememe")
-        this.$toast.warn({
-          title:'Uyarı',
-          message:'İşlem başarılı fakat mail gönderilemedi'
-        })
+
+
+        this.$toast.warning('İşlem başarılı fakat mail gönderilemedi')
         setTimeout(() => this.$router.push({
           name: 'ServiceList',
           params: {message: "Arıza tespiti başarıyla yapıldı"}
         }), 3000);
       }
 
+
+      loader.hide()
 
     },
 
@@ -1086,6 +1090,7 @@ export default {
 
   },
   mounted() {
+
     this.getServiceDetail(this.$route.params.serviceId)
     this.getSelectCategories()
     this.getSelectBrands()

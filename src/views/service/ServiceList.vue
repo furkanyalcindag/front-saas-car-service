@@ -18,6 +18,12 @@
                   <h3>Servis Listesi {{ this.message }}</h3>
 
                 </CCol>
+                <CCol lg="9" style="float: right">
+
+
+                  <CButton :disabled="this.isPrint" @click="send" style="float: right" color="success">Yazdır({{this.selectedItems.length}})</CButton>
+
+                </CCol>
 
               </CRow>
             </CCardHeader>
@@ -70,6 +76,10 @@
                     clickableRows
 
                 >
+                  <template #ids="{ item }">
+                    <td><input :disabled="item.serviceSituation !== 'Teslim Edildi'" type="checkbox" id="vehicle1" v-model="selectedItems" :value="item.uuid"></td>
+
+                  </template>
 
                   <template #serviceSituation="{item}">
                     <td>
@@ -344,6 +354,7 @@ export default {
     return {
 
       fieldsTable: [
+        {key: 'ids', label: "Seç"},
         {key: 'id', label: "Servis No"},
         {key: 'serviceType', label: "Servis Tipi", _style: "min-width:200px"},
         {key: "plate", label: "Plaka"},
@@ -429,7 +440,9 @@ export default {
       deleteId: '',
       deleteModal: false,
       deleteButton: false,
-      plateFilter: ''
+      plateFilter: '',
+      selectedItems: [],
+      isPrint:false
     };
   },
 
@@ -456,7 +469,7 @@ export default {
         case "İptal Edildi":
           return "danger";
         case "Teslim Edildi":
-          return "danger";
+          return "success";
         default:
           return "warning";
       }
@@ -723,12 +736,43 @@ export default {
     serviceProcessDeliver(serviceId, receivingPerson) {
       this.serviceProcess(serviceId, 3, receivingPerson)
       this.receivingPerson = ''
+    },
+
+    async getServicePdf(id = this.$route.params.serviceId) {
+
+      let response = await new ServiceService().getServicePdf(id);
+      debugger
+
+    },
+    async send() {
+      console.log(this.selectedItems.toString());
+
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        this.load = true
+        console.log("uuid", this.selectedItems[i])
+        await this.getServicePdf(this.selectedItems[i])
+
+      }
+      this.$toast.success({
+        message: "Dosyalar Başarıyla İndirildi"
+      })
+
+      this.load = false
     }
 
 
   },
 
   watch: {
+    selectedItems:function (val) {
+      if(val.length>0){
+        this.isPrint = false
+      }
+      else {
+        this.isPrint = true
+      }
+
+    },
 
     page: function (val) {
       console.log(val)
